@@ -1,32 +1,14 @@
 local awful = require("awful")
 local wibox = require("wibox")
-local beautiful = require("beautiful")
-local dpi = beautiful.xresources.apply_dpi
+local xresources = require("beautiful.xresources")
+local dpi = xresources.apply_dpi
 
 require("ui.menu")
 require("configuration.tags")
-
 -- {{{ Wibar
 
 -- Create a textclock widget
-local calendar_widget = require("ui.widgets.calendar")
-
--- Create a textclock widget
-mytextclock = wibox.widget.textclock('%I:%M %p')
-
--- or customized
-local cw = calendar_widget({
-    theme = 'nord',
-    placement = 'top_right',
-    start_sunday = false,
-    radius = 8,
-    previous_month_button = 1,
-    next_month_button = 3,
-})
-mytextclock:connect_signal("button::press",
-    function(_, _, _, button)
-        if button == 1 then cw.toggle() end
-    end)
+local calendar = require("ui.widgets.calendar")
 
 --screen.connect_signal("request::desktop_decoration", function(s)
 awful.screen.connect_for_each_screen(function(s)
@@ -109,7 +91,7 @@ awful.screen.connect_for_each_screen(function(s)
                   margins = dpi(10),
                   widget = wibox.container.margin,
               },
-              mytextclock,
+              calendar,
               s.mylayoutbox,
               spacing = dpi(10),
               layout = wibox.layout.fixed.horizontal,

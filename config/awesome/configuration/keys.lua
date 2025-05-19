@@ -1,7 +1,7 @@
 local awful = require("awful")
-local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup")
+local calendar = require("ui.widgets.calendar")
 
 -- {{{ Mouse bindings
 awful.mouse.append_global_mousebindings({
@@ -41,6 +41,13 @@ awful.keyboard.append_global_keybindings({
               {description = "run rofi", group = "launcher"}),
     awful.key({ modkey }, "Print", function() awful.util.spawn('flameshot gui') end,
               {description = "Launch flameshot", group = "launcher"}),
+    awful.key({ modkey }, "c", function ()
+          if calendar.popup.visible then
+              calendar.popup.visible = false
+          else
+              calendar.popup.visible = true
+          end
+    end, {description = "show calendar", group = "client"})
 })
 
 -- Tags related keybindings

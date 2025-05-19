@@ -3,7 +3,7 @@ local beautiful = require("beautiful")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
-beautiful.init("~/.config/awesome/theme/theme.lua")
+beautiful.init(awful.util.get_configuration_dir() .. "theme/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "/usr/bin/kitty"
@@ -12,8 +12,6 @@ editor_cmd = terminal .. " -e " .. editor
 
 -- Apps
 browser = "/usr/bin/brave"
-debuger = "/usr/bin/ghidra"
-caido = "/usr/bin/caido"
 
 --Menu-Power
 poweroff = "/usr/bin/poweroff"
@@ -34,15 +32,9 @@ powermenu = {
   {"Reset", reset_machine },
 }
 
-apps = {
-   {"Browser", browser, beautiful.brave_icon},
-   {"Ghidra", debuger, beautiful.ghidra_icon},
-   {"Caido", caido, beautiful.caido_icon}
-}
-
 mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "Terminal", terminal, beautiful.kitty_icon },
-                                    { "Apps", apps },
+                                    { "Browser", browser, beautiful.brave_icon },
                                     { "Powermenu", powermenu, beautiful.powermenu_icon },
                                   },
                         })

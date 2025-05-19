@@ -49,7 +49,7 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 # Manual configuration
 
-PATH=/root/.local/bin:/snap/bin:/usr/sandbox/:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/share/games:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:$HOME/.local/share/gem/ruby/3.3.0/bin
+PATH=/root/.local/bin:/snap/bin:/usr/sandbox/:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/share/games:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:$HOME/.local/share/gem/ruby/3.4.0/bin
 
 # Manual aliases
 alias ll='lsd -lh --group-dirs=first'
@@ -69,11 +69,6 @@ alias hiclear="echo '' > $HOME/.zsh_history"
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh-sudo/sudo.plugin.zsh
-
-# Functions
-function mkt(){
-	mkdir {nmap,content,exploits}
-}
 
 # Function ssh color
 sshc() {

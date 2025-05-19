@@ -10,13 +10,11 @@ local naughty = require("naughty")
 -- Declarative object management
 local ruled = require("ruled")
 -- Enable hotkeys help widget for VIM and other apps
--- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
-require("configuration.keys")
-require("configuration.rules")
-require("ui.menu")
-require("configuration.wallpaper")
-require("ui.bar")
+
+-- Modules
+require("ui")
+require("configuration")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -32,7 +30,7 @@ end)
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init("~/.config/awesome/theme/theme.lua")
+beautiful.init(awful.util.get_configuration_dir() .. "theme/theme.lua")
 
 -- {{{ Mouse bindings
 awful.mouse.append_global_mousebindings({

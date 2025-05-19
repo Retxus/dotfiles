@@ -3,27 +3,42 @@ local xresources = require("beautiful.xresources")
 local rnotification = require("ruled.notification")
 local dpi = xresources.apply_dpi
 local awful = require("awful")
-local helpers = require("helpers")
-local helpers = require("helpers")
+local gears = require("gears")
 
 local themes_path = awful.util.get_configuration_dir() .. "theme/"
 
 local theme = {}
 
 -- Colors
+theme.crust = "#11111b"
+theme.mantle = "#181825"
+theme.base = "#1e1e2e"
+theme.surface0 = "#313244"
+theme.surface1 = "#45475a"
+theme.surface2 = "#585b70"
+theme.overlay0 = "#6c7086"
+theme.overlay1 = "#7f849c"
+theme.overlay2 = "#9399b2"
+theme.subtext0 = "#a6adc8"
+theme.subtext1 = "#bac2de"
+theme.text = "#cdd6f4"
+theme.lavender = "#b4befe"
+theme.blue = "#89b4fa"
+theme.shappire = "#74c7ec"
+theme.sky = "#89dceb"
+theme.teal = "#94e2d5"
+theme.green = "#a6e3a1"
+theme.yellow = "#f9e2af"
+theme.peach = "#fab387"
+theme.maroon = "#eba0ac"
+theme.red = "#f38ba8"
+theme.mauve = "#cba6f7"
+theme.pink = "#f5c2e7"
+theme.flamingo = "#f2cdcd"
+theme.rosewater = "#f5e0dc"
 theme.dark = "#000000"
 theme.white = "#ffffff"
-theme.red = "#ff0000"
-theme.moon = "#f5eb94"
-theme.uranus = "#f5d1a3"
-theme.pluto = "#fabdd4"
-theme.chibimoon = "#efa3ce"
-theme.marine = "#1f2334"
-theme.transparent = "#0000000"
-
-theme.border_radius = dpi(12)
-
-theme.font = "HackNerdFont 14"
+theme.transparent = "#00000000"
 
 -- Background colors
 theme.bg_normal = theme.dark
@@ -44,14 +59,13 @@ theme.border_color_marked = theme.transparent
 theme.taglist_bg_focus = theme.transparent
 theme.taglist_bg_urgent = theme.transparent
 
-theme.taglist_fg_focus = theme.uranus
+theme.taglist_fg_focus = theme.teal
 
 theme.taglist_spacing = dpi(6)
 theme.taglist_font = "HackNerdFont 14"
 
 -- Wibar
-theme.wibar_bg ="#454e5a"
-theme.wibar_widget_bg = "#424f5b"
+theme.wibar_bg = theme.surface0
 theme.wibar_border_color = theme.transparent
 theme.wibar_border_width = dpi(2)
 theme.wibar_margins = {
@@ -60,19 +74,19 @@ theme.wibar_margins = {
     right = dpi(8),
     bottom = dpi(-4)
 }
-theme.wibar_shape = helpers.rrect(10)
+theme.wibar_shape = gears.shape.rounded_rect
 
 --Hotkeys
-theme.hotkeys_bg = theme.marine
-theme.hotkeys_border_color = "#8c8c8c"
-theme.hotkeys_modifiers_fg = "#dddddd"
-theme.hotkeys_shape = helpers.rrect(10)
+theme.hotkeys_bg = theme.surface0
+theme.hotkeys_border_color = theme.overlay2
+theme.hotkeys_modifiers_fg = theme.white
+theme.hotkeys_shape = gears.shape.rounded_rect
 theme.hotkeys_border_width = dpi(2)
-theme.hotkeys_font = "HackNerdFont 9"
-theme.hotkeys_description_font = "HackNerdFont 9"
+theme.hotkeys_font = "HackNerdFont 10"
+theme.hotkeys_description_font = "HackNerdFont 10"
 theme.hotkeys_group_margin = dpi(12)
 
--- Generate taglist squares:
+-- Generate taglist squares
 local taglist_square_size = dpi(0)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
     taglist_square_size, theme.fg_normal
@@ -84,10 +98,10 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
 --Awesome menu
 theme.menu_submenu_icon = themes_path .. "icons/menu/submenu.png"
 theme.menu_font = "HackNerdFont 12"
-theme.menu_bg_normal = theme.marine
-theme.menu_bg_focus = "#374246"
-theme.menu_fg_focus = theme.white
-theme.menu_fg_normal = "#84b1fa"
+theme.menu_bg_normal = theme.surface0
+theme.menu_bg_focus = theme.surface2
+theme.menu_fg_focus = theme.sky
+theme.menu_fg_normal = theme.text
 theme.menu_height = dpi(22)
 theme.menu_width = dpi(160)
 
@@ -109,9 +123,7 @@ theme.layout_dwindle = themes_path .. "icons/layouts/spiraldwindle.png"
 theme.awesome_icon = themes_path .. "icons/menu/arch.svg"
 theme.powermenu_icon = themes_path .. "icons/menu/power.svg"
 theme.brave_icon = themes_path .. "icons/menu/brave.png"
-theme.ghidra_icon = themes_path .. "icons/menu/ghidra.svg"
 theme.kitty_icon = themes_path .. "icons/menu/kitty.png"
-theme.caido_icon = themes_path .. "icons/menu/caido.png"
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
