@@ -1,8 +1,15 @@
 local awful = require("awful")
 local wibox = require("wibox")
 local gears = require("gears")
-local xresources = require("beautiful.xresources")
-local dpi = xresources.apply_dpi
+local beautiful = require("beautiful")
+local dpi = beautiful.xresources.apply_dpi
+
+-- Textclock
+local calendar_text = wibox.widget {
+    format = "%I:%M %p",
+    widget = wibox.widget.textclock
+}
+calendar_text.font = "HackNerdFontBold 14"
 
 -- Current date to control the calendar
 local current_date = os.date("*t")
@@ -19,24 +26,17 @@ local function change_month(offset)
     end
 end
 
--- Textclock
-local calendar_text = wibox.widget {
-    format = "%I:%M %p",
-    widget = wibox.widget.textclock
-}
-calendar_text.font = "HackNerdFont 14"
 
 -- Calendar widget
 local calendar_widget = wibox.widget {
     date = current_date,
-    font = "HackNerdFont 12",
+    font = "HackNerdFontBold 12",
     spacing = dpi(4),
     fn_embed = function(widget, flag)
         return wibox.widget {
             {
                 {
                     widget,
-                    halign = "center",
                     widget = wibox.container.place
                 },
                 margins = dpi(8),
@@ -54,7 +54,7 @@ local calendar_widget = wibox.widget {
 local function create_month_button(symbol, offset)
     local text = wibox.widget {
         text = symbol,
-        font = "HackNerdFont 16",
+        font = "HackNerdFontBold 16",
         align = "center",
         valign = "center",
         widget = wibox.widget.textbox
@@ -108,7 +108,7 @@ local calendar_popup = awful.popup {
         margins = dpi(6),
         widget = wibox.container.margin
     },
-    border_color = "#b4befe",
+    border_color = beautiful.calendar_border,
     border_width = dpi(3),
     placement = function(d)
         awful.placement.align(d, {
@@ -121,44 +121,55 @@ local calendar_popup = awful.popup {
     shape = gears.shape.rounded_rect,
     visible = false,
     ontop = true,
-    bg = "#313244",
-    fg = "#cdd6f4",
+    bg = beautiful.calendar_bg,
+    fg = beautiful.calendar_fg,
 }
 
 -- Click catcher to clone calenda
-local click_catcher = wibox {
+local clic_catcher = wibox {
     ontop = true,
     visible = false,
-    bg = "#00000000",
+    bg = beautiful.calendar_transparent,
     type = "dock"
 }
 
-click_catcher:buttons(gears.table.join(
+clic_catcher:buttons(gears.table.join(
     awful.button({}, 1, function()
         calendar_popup.visible = false
-        click_catcher.visible = false
+        clic_catcher.visible = false
     end)
 ))
 
+-- Hide calendar when change tag
+tag.connect_signal("property::selected", function()
+    if calendar_popup.visible then
+        calendar_popup.visible = false
+    end
+end)
+
 -- Show/Hide calendar when clicking on the clock
+local function toggle()
+    if calendar_popup.visible then
+        calendar_popup.visible = false
+        clic_catcher.visible = false
+    else
+        clic_catcher.screen = mouse.screen
+        clic_catcher.width = mouse.screen.geometry.width
+        clic_catcher.height = mouse.screen.geometry.height
+        clic_catcher.visible = true
+        calendar_popup.screen = mouse.screen
+        calendar_popup.visible = true
+    end
+end
+
 calendar_text:buttons(gears.table.join(
     awful.button({}, 1, function()
-        if calendar_popup.visible then
-            calendar_popup.visible = false
-            click_catcher.visible = false
-        else
-            click_catcher.screen = mouse.screen
-            click_catcher.width = mouse.screen.geometry.width
-            click_catcher.height = mouse.screen.geometry.height
-            click_catcher.visible = true
-            calendar_popup.screen = mouse.screen
-            calendar_popup.visible = true
-        end
+        toggle()
     end)
 ))
 
 -- Export
 return {
     widget = calendar_text,
-    popup = calendar_popup
+    toggle = toggle
 }

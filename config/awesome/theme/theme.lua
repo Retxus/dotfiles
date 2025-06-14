@@ -1,11 +1,8 @@
-local theme_assets = require("beautiful.theme_assets")
-local xresources = require("beautiful.xresources")
-local rnotification = require("ruled.notification")
-local dpi = xresources.apply_dpi
-local awful = require("awful")
+local beautiful = require("beautiful")
+local dpi = beautiful.xresources.apply_dpi
 local gears = require("gears")
 
-local themes_path = awful.util.get_configuration_dir() .. "theme/"
+local themes_path = gears.filesystem.get_configuration_dir() .. "theme/"
 
 local theme = {}
 
@@ -51,30 +48,32 @@ theme.fg_urgent = theme.red
 
 theme.useless_gap = dpi(6)
 theme.border_width = dpi(0)
-theme.border_color_normal = theme.dark
-theme.border_color_active = theme.dark
-theme.border_color_marked = theme.transparent
+theme.border_normal = theme.dark
+theme.border_active = theme.dark
+theme.border_marked = theme.transparent
 
 -- Taglist
+theme.taglist_fg_focus = theme.teal
 theme.taglist_bg_focus = theme.transparent
 theme.taglist_bg_urgent = theme.transparent
 
-theme.taglist_fg_focus = theme.teal
-
-theme.taglist_spacing = dpi(6)
-theme.taglist_font = "HackNerdFont 14"
+theme.taglist_font = "HackNerdFont 12"
 
 -- Wibar
 theme.wibar_bg = theme.surface0
-theme.wibar_border_color = theme.transparent
-theme.wibar_border_width = dpi(2)
-theme.wibar_margins = {
-    top = dpi(8),
-    left = dpi(8),
-    right = dpi(8),
-    bottom = dpi(-4)
-}
 theme.wibar_shape = gears.shape.rounded_rect
+
+--Calendar
+theme.calendar_border = theme.lavender
+theme.calendar_bg = theme.surface0
+theme.calendar_fg = theme.text
+theme.calendar_transparent = theme.transparent
+
+-- PowerOff
+theme.power_bg = theme.surface0
+theme.power_fg = theme.text
+theme.power_border = theme.mauve
+theme.power_icon = themes_path .. "icons/media/power.png"
 
 --Hotkeys
 theme.hotkeys_bg = theme.surface0
@@ -85,15 +84,6 @@ theme.hotkeys_border_width = dpi(2)
 theme.hotkeys_font = "HackNerdFont 10"
 theme.hotkeys_description_font = "HackNerdFont 10"
 theme.hotkeys_group_margin = dpi(12)
-
--- Generate taglist squares
-local taglist_square_size = dpi(0)
-theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
-    taglist_square_size, theme.fg_normal
-)
-theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
-    taglist_square_size, theme.fg_normal
-)
 
 --Awesome menu
 theme.menu_submenu_icon = themes_path .. "icons/menu/submenu.png"
@@ -121,22 +111,7 @@ theme.layout_dwindle = themes_path .. "icons/layouts/spiraldwindle.png"
 
 -- Generate menu icons
 theme.awesome_icon = themes_path .. "icons/menu/arch.svg"
-theme.powermenu_icon = themes_path .. "icons/menu/power.svg"
-theme.brave_icon = themes_path .. "icons/menu/brave.png"
-theme.kitty_icon = themes_path .. "icons/menu/kitty.png"
 
--- Define the icon theme for application icons. If not set then the icons
--- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = nil
 
--- Set different colors for urgent notifications.
-rnotification.connect_signal('request::rules', function()
-    rnotification.append_rule {
-        rule       = { urgency = 'critical' },
-        properties = { bg = theme.red, fg = theme.white }
-    }
-end)
-
 return theme
-
--- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80

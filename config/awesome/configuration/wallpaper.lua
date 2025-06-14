@@ -1,23 +1,19 @@
 local beautiful = require("beautiful")
-local awful = require("awful")
-local wibox = require("wibox")
+local screen =  screen
+local gears = require("gears")
 
--- {{{ Wallpaper
-screen.connect_signal("request::wallpaper", function(s)
-    awful.wallpaper ({
-        screen = s,
-        widget = {
-            {
-                image     = beautiful.wallpaper,
-                upscale   = true,
-                downscale = true,
-                widget    = wibox.widget.imagebox,
-            },
-            valign = "center",
-            halign = "center",
-            tiled  = false,
-            widget = wibox.container.tile,
-        }
-    })
-end)
--- }}}
+local function set_wallpaper(s)
+    if beautiful.wallpaper then
+        local wp = beautiful.wallpaper
+        if type(wp) == "function" then
+            wp = wp(s)
+        end
+        gears.wallpaper.maximized(wp, s, true)
+    end
+end
+
+screen.connect_signal("property::geometry", set_wallpaper)
+
+for s in screen do
+    set_wallpaper(s)
+end
